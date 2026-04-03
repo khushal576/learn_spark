@@ -1,0 +1,67 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+.Python
+env/
+venv/
+.venv/
+ENV/
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Jupyter Notebooks
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# Spark
+derby.log
+metastore_db/
+spark-warehouse/
+*.crc
+
+# Logs
+logs/
+*.log
+log/
+
+# Data files (generated during exercises)
+data/output/
+data/temp/
+*.parquet
+*.orc
+*.avro
+checkpoints/
+
+# Delta Lake
+_delta_log/
+
+# Environment
+.env
+.env.local
+*.env
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# Docker volumes
+volumes/
+
+# Test cache
+.pytest_cache/
+.coverage
+htmlcov/
+
+# MyPy
+.mypy_cache/

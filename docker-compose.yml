@@ -1,0 +1,108 @@
+# ============================================================
+# Docker Compose — Spark Learning Cluster
+#
+# Services:
+#   spark-master  → Cluster Manager (UI at localhost:8080)
+#   spark-worker-1 → Worker Node 1
+#   spark-worker-2 → Worker Node 2
+#   jupyter       → Notebook IDE (at localhost:8888)
+#
+# Usage:
+#   Start cluster : docker-compose up -d
+#   Stop cluster  : docker-compose down
+#   View logs     : docker-compose logs -f jupyter
+#   Open shell    : docker-compose exec jupyter bash
+# ============================================================
+
+version: "3.8"
+
+x-spark-common: &spark-common
+  build: .
+  environment:
+    - SPARK_MODE=worker
+    - SPARK_MASTER_URL=spark://spark-master:7077
+    - SPARK_WORKER_MEMORY=1G
+    - SPARK_WORKER_CORES=1
+    - JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
+  volumes:
+    - .:/workspace
+  depends_on:
+    - spark-master
+
+services:
+
+  # ── Spark Master (Cluster Manager) ───────────────────────────
+  spark-master:
+    build: .
+    container_name: spark-master
+    hostname: spark-master
+    environment:
+      - SPARK_MODE=master
+      - SPARK_MASTER_HOST=spark-master
+      - SPARK_MASTER_PORT=7077
+      - JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
+    ports:
+      - "8080:8080"   # Spark Master Web UI
+      - "7077:7077"   # Spark Master internal port
+    volumes:
+      - .:/workspace
+    command: >
+      bash -c "/opt/spark/sbin/start-master.sh &&
+               tail -f /opt/spark/logs/*.out"
+    networks:
+      - spark-net
+
+  # ── Spark Worker 1 ────────────────────────────────────────────
+  spark-worker-1:
+    <<: *spark-common
+    container_name: spark-worker-1
+    hostname: spark-worker-1
+    ports:
+      - "8081:8081"   # Worker Web UI
+    command: >
+      bash -c "/opt/spark/sbin/start-worker.sh spark://spark-master:7077 &&
+               tail -f /opt/spark/logs/*.out"
+    networks:
+      - spark-net
+
+  # ── Spark Worker 2 ────────────────────────────────────────────
+  spark-worker-2:
+    <<: *spark-common
+    container_name: spark-worker-2
+    hostname: spark-worker-2
+    ports:
+      - "8082:8081"   # Worker Web UI (mapped to 8082 on host)
+    command: >
+      bash -c "/opt/spark/sbin/start-worker.sh spark://spark-master:7077 &&
+               tail -f /opt/spark/logs/*.out"
+    networks:
+      - spark-net
+
+  # ── Jupyter Notebook (your coding environment) ────────────────
+  jupyter:
+    build: .
+    container_name: spark-jupyter
+    hostname: jupyter
+    environment:
+      - SPARK_MASTER=spark://spark-master:7077
+      - JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
+      - PYSPARK_PYTHON=python3
+      - PYSPARK_DRIVER_PYTHON=python3
+    ports:
+      - "8888:8888"   # Jupyter UI
+      - "4040:4040"   # Spark App UI (when a job runs)
+      - "4041:4041"   # Spark App UI (second app)
+    volumes:
+      - .:/workspace
+    depends_on:
+      - spark-master
+      - spark-worker-1
+      - spark-worker-2
+    command: >
+      jupyter notebook --notebook-dir=/workspace --allow-root
+    networks:
+      - spark-net
+
+networks:
+  spark-net:
+    driver: bridge
