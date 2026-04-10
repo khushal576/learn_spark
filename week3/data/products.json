@@ -1,0 +1,5 @@
+{"product_id": "P001", "name": "Laptop", "category": "Electronics", "price": 999.99, "stock": 50}
+{"product_id": "P002", "name": "T-Shirt", "category": "Clothing", "price": 29.99, "stock": 200}
+{"product_id": "P003", "name": "Headphones", "category": "Electronics", "price": 149.99, "stock": 75}
+{"product_id": "P004", "name": "Jeans", "category": "Clothing", "price": 59.99, "stock": 150}
+{"product_id": "P005", "name": "Coffee Maker", "category": "Appliances", "price": 79.99, "stock": 30}

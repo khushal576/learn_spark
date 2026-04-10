@@ -1,0 +1,11 @@
+id,name,dept,salary,country,join_date,active
+1,Alice,Engineering,95000,India,2021-03-15,true
+2,Bob,Engineering,88000,USA,2020-07-01,true
+3,Carol,Marketing,72000,India,2022-01-10,true
+4,Dave,Marketing,68000,UK,2019-11-20,false
+5,Eve,Sales,55000,India,2023-02-28,true
+6,Frank,Sales,62000,USA,2021-08-15,true
+7,Grace,Engineering,105000,India,2018-06-01,true
+8,Henry,Marketing,78000,Australia,2022-09-05,true
+9,Isla,Engineering,91000,UK,2020-12-01,false
+10,Jack,Sales,59000,India,2023-05-20,true
