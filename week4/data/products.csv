@@ -1,0 +1,11 @@
+product_id,name,category,price,stock,supplier_id
+P001,Laptop Pro 15,Electronics,1299.99,50,S1
+P002,Wireless Mouse,Electronics,29.99,200,S1
+P003,Standing Desk,Furniture,449.99,30,S2
+P004,Office Chair,Furniture,299.99,45,S2
+P005,Python Book,Books,39.99,150,S3
+P006,Spark Book,Books,44.99,100,S3
+P007,USB-C Hub,Electronics,49.99,120,S1
+P008,Noise Headphones,Electronics,199.99,75,S1
+P009,Desk Lamp,Furniture,59.99,80,S2
+P010,Docker Book,Books,34.99,90,S3
