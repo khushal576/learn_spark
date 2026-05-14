@@ -1,5 +1,3 @@
-version: "3.8"
-
 # Master and workers use the official image directly — no build needed.
 # Only Jupyter needs a custom build (to add Python packages).
 
@@ -11,7 +9,7 @@ services:
     hostname: spark-master
     command: /opt/spark/bin/spark-class org.apache.spark.deploy.master.Master
     ports:
-      - "8080:8080"
+      - "8083:8080"
       - "7077:7077"
     volumes:
       - .:/workspace
