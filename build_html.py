@@ -8,7 +8,7 @@ import sys
 import nbformat
 from nbformat.v4 import new_notebook
 
-EXECUTE_WEEKS = {f"week{i}" for i in range(2, 6)}
+EXECUTE_WEEKS = {f"week{i:02d}" for i in range(2, 6)}
 HTML_DIR = "html"
 TIMEOUT = 300  # seconds per notebook
 
@@ -92,7 +92,7 @@ def main():
     weeks = get_weeks()
     print(f"Found {len(weeks)} weeks", flush=True)
 
-    HTML_WEEKS = {f"week{i}" for i in range(2, 6)}
+    HTML_WEEKS = {f"week{i:02d}" for i in range(2, 6)}
 
     # Execute weeks 2-5 (skip already-executed notebooks)
     for week in weeks:
@@ -107,6 +107,7 @@ def main():
                 print(f"  Skipping {nb_path} (already executed)", flush=True)
                 continue
             execute_notebook(nb_path)
+
 
     # Generate HTML for weeks 2-5
     print("\nGenerating HTML files...", flush=True)
